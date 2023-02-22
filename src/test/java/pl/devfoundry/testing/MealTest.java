@@ -3,6 +3,7 @@ package pl.devfoundry.testing;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MealTest {
@@ -58,7 +59,16 @@ class MealTest {
         //then
         assertEquals(meal1, meal2, "Checking if two meals are equal");
         assertThat(meal1).isEqualTo(meal2);
-
     }
 
+//    @Test(expected = IllegalArgumentException.class)  // Tak jest w JUnit 4
+    @Test
+    void exceptionShouldBeThrownIfDiscountIsHigherThanThePrice(){
+        // given
+        Meal meal = new Meal(8, "Soup");
+
+        // when
+        // then
+        assertThrows(IllegalArgumentException.class, () -> meal.getDiscountedPrice(30)); // Tak jest w JUnit 5
+    }
 }
