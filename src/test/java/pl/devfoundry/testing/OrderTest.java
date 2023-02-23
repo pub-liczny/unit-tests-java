@@ -1,5 +1,7 @@
 package pl.devfoundry.testing;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,6 +13,22 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 // Testowanie kolekcji
 public class OrderTest {
+
+    Order order;
+
+    @BeforeEach     // Tak dla JUnit5
+//    @Before       // Tak dla JUnit4
+    void initialize() {
+//        System.out.println("Inside @BeforeEach method");
+        order = new Order();
+    }
+
+    @AfterEach      // Tak dla JUnit5
+//    @AfterEach        // Tak dla JUnit4
+    void cleanUp() {
+//        System.out.println("Inside @AfterEach method");
+        order.cancel();
+    }
 
     @Test
     void testAssertArrayEquals() {
@@ -24,9 +42,6 @@ public class OrderTest {
 
     @Test
     void mealListShouldBeEmptyAfterCreationOfOrder() {
-        // Given
-        Order order = new Order();
-
         // then
         assertThat(order.getMeals()).isNotNull();
         assertThat(order.getMeals()).isEmpty();
@@ -50,7 +65,6 @@ public class OrderTest {
         // given
         Meal meal = new Meal(15, "Burger");
         Meal meal2 = new Meal(5, "Sandwich");
-        Order order = new Order();
 
         // when
         order.addMealToOrder(meal);
@@ -68,7 +82,6 @@ public class OrderTest {
     void removeMealFromOrderShouldDecreaseOrderSize() {
         // given
         Meal meal = new Meal(15, "Burger");
-        Order order = new Order();
 
         // when
         order.addMealToOrder(meal);
@@ -86,7 +99,6 @@ public class OrderTest {
         // given
         Meal meal1 = new Meal(15, "Burger");
         Meal meal2 = new Meal(5, "Sandwich");
-        Order order = new Order();
 
         // when
         order.addMealToOrder(meal1);
@@ -112,4 +124,6 @@ public class OrderTest {
         // then
         assertThat(meals1).isEqualTo(meals2);   // sprawdzenie czy są te same elementy w tej samej kolejnosci
     }
+
+
 }
