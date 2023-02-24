@@ -1,11 +1,27 @@
 package pl.devfoundry.testing;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 class AccountTest {
+
+    @RepeatedTest(5)
+    void newAccountWithNotNullAddressShouldBeActive(){
+        //given
+        Address address = new Address("Puławska", "4");
+
+        //when
+        Account account = new Account(address);
+
+        //then
+        assumingThat(address == null, () -> {  // jeżeli ten warunek nie zostanie spełniony w ogóle nie wejdzie do ciała
+            assertTrue(account.isActive());               // i nie będzie tego sprawdzał, więc test będzie OK
+        });;
+    }
 
     @Test
     void newlyCreatedAccountShouldNotBeActive() {
